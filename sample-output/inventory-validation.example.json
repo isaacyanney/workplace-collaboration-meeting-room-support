@@ -1,0 +1,12 @@
+{
+  "SchemaVersion": "1.0",
+  "Environment": "Synthetic practice framework",
+  "ConnectedToDevicesOrServices": false,
+  "RoomCount": 3,
+  "PassedCount": 3,
+  "Findings": [
+    {"RoomId": "DEMO-RM-101", "ValidationPassed": true, "Messages": []},
+    {"RoomId": "DEMO-RM-202", "ValidationPassed": true, "Messages": []},
+    {"RoomId": "DEMO-RM-303", "ValidationPassed": true, "Messages": []}
+  ]
+}
