@@ -1,0 +1,4 @@
+RoomId,Location,Capacity,Platform,DisplayCount,Camera,AudioDevice,Connection,SupportTier
+DEMO-RM-101,Berlin-DEMO-F1,6,Teams,1,DEMO-CAM-01,DEMO-AUDIO-01,HDMI-USB,Standard
+DEMO-RM-202,Berlin-DEMO-F2,12,Zoom,2,DEMO-CAM-02,DEMO-AUDIO-02,USB-C,Enhanced
+DEMO-RM-303,Berlin-DEMO-F3,4,Bring-Your-Own-Device,1,DEMO-CAM-03,DEMO-AUDIO-03,USB-C,Standard
