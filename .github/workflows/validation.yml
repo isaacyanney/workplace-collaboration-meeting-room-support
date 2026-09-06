@@ -1,0 +1,37 @@
+name: Repository validation
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse PowerShell
+        shell: pwsh
+        run: |
+          Get-ChildItem -Recurse -Filter *.ps1 | ForEach-Object {
+            $tokens = $null; $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile($_.FullName,[ref]$tokens,[ref]$errors) | Out-Null
+            if ($errors.Count -gt 0) { throw "PowerShell syntax error in $($_.FullName)" }
+          }
+      - name: Install Pester
+        shell: pwsh
+        run: Install-Module Pester -MinimumVersion 5.5.0 -Scope CurrentUser -Force
+      - name: Run tests
+        shell: pwsh
+        run: |
+          $result = Invoke-Pester -Path tests -PassThru
+          if ($result.FailedCount -gt 0) { exit 1 }
+      - name: Validate sample JSON
+        shell: pwsh
+        run: |
+          $sample = Get-Content -Raw sample-output/inventory-validation.example.json | ConvertFrom-Json
+          if ($sample.Environment -ne "Synthetic practice framework") { throw "Missing synthetic boundary" }
+          if ($sample.ConnectedToDevicesOrServices -ne $false) { throw "External connection claim is unsafe" }
